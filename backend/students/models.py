@@ -9,3 +9,10 @@ class Student(models.Model):
     def __str__(self):
         return self.name
     
+
+    #these are the orm operations
+    #retrive the student by name
+    #retrive only the email
+    #count total students
+    #update the student by age
+    # ctr+/
