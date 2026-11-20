@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Portal | Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(-45deg, #eef2ff, #e0f2fe, #f0f9ff, #ede9fe);
+            background-size: 400% 400%;
+            animation: backgroundMove 15s ease infinite;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Navbar */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226, 232, 240, .8);
+            box-shadow: 0 4px 25px rgba(15, 23, 42, .04);
+            animation: navIn .7s ease;
+        }
+
+        @keyframes navIn {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 19px;
+            font-weight: 800;
+            color: #312e81;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, .25);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            transition: .3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4f46e5;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -8px;
+            left: 0;
+            background: #6366f1;
+            transition: .3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-btn {
+            border: none;
+            padding: 10px 19px;
+            border-radius: 9px;
+            background: linear-gradient(100deg, #6366f1, #06b6d4);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(99, 102, 241, .3);
+        }
+
+        /* Main Content */
+
+        .container {
+            max-width: 1150px;
+            width: 90%;
+            margin: 65px auto;
+        }
+
+        .welcome-section {
+            padding: 42px;
+            border-radius: 22px;
+            background: linear-gradient(115deg, #312e81, #4f46e5, #0891b2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(79, 70, 229, .2);
+            animation: fadeUp .8s ease;
+        }
+
+        .welcome-section::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 50%;
+            right: -70px;
+            top: -130px;
+            box-shadow: 0 0 0 35px rgba(255, 255, 255, .04),
+                        0 0 0 70px rgba(255, 255, 255, .03);
+            animation: rotate 25s linear infinite;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-section .tag {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .15);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h1 {
+            font-size: clamp(25px, 4vw, 36px);
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -1px;
+        }
+
+        .welcome-section p {
+            font-size: 14px;
+            color: #dbeafe;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .username {
+            color: #a5f3fc;
+        }
+
+        /* Dashboard Cards */
+
+        .section-heading {
+            margin: 45px 0 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 21px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 7px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            padding: 27px;
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(226, 232, 240, .9);
+            border-radius: 17px;
+            box-shadow: 0 7px 25px rgba(15, 23, 42, .04);
+            transition: .35s;
+            animation: fadeUp .8s ease both;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(79, 70, 229, .12);
+            border-color: #c7d2fe;
+        }
+
+        .card-icon {
+            width: 49px;
+            height: 49px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            font-size: 22px;
+            margin-bottom: 20px;
+            background: #eef2ff;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+
+        .card p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        /* Footer */
+
+        footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+
+        @media(max-width: 900px) {
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 650px) {
+            .navbar {
+                height: auto;
+                min-height: 75px;
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 15px 5%;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+                padding: 8px 0;
+                gap: 22px;
+            }
+
+            .nav-right {
+                gap: 9px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .container {
+                margin: 35px auto;
+            }
+
+            .welcome-section {
+                padding: 30px 23px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar">
+
+        <a href="#home" class="brand">
+            <span class="brand-icon">S</span>
+            Student Portal
+        </a>
+
+        <div class="nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#products">Products</a>
+        </div>
+
+        <div class="nav-right">
+
+            <span class="user-name">
+                {{ user.username }}
+            </span>
+
+            <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">
+                    Logout ↗
+                </button>
+            </form>
+
+        </div>
+
+    </nav>
+
+    <!-- Main Dashboard -->
+
+    <main class="container" id="home">
+
+        <section class="welcome-section">
+
+            <span class="tag">STUDENT PORTAL · YOUR LEARNING SPACE</span>
+
+            <h1>
+                Welcome Back, <span class="username">{{ user.username }}</span> 👋
+            </h1>
+
+            <p>
+                Your learning journey continues here. Stay focused, explore new
+                opportunities, develop your skills, and take the next step
+                towards achieving your academic goals.
+            </p>
+
+        </section>
+
+        <!-- Dashboard Section -->
+
+        <section id="dashboard">
+
+            <div class="section-heading">
+                <h2>Your Dashboard</h2>
+                <p>Everything you need to manage your student experience.</p>
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Learning Journey</h3>
+                    <p>
+                        Stay committed to your learning goals and continue
+                        building knowledge for your future.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>Academic Growth</h3>
+                    <p>
+                        Explore opportunities to improve your academic
+                        performance and strengthen your skills.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Future Opportunities</h3>
+                    <p>
+                        Keep learning, stay curious, and prepare yourself
+                        for exciting opportunities ahead.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Products Section -->
+
+        <section id="products">
+
+            <div class="section-heading">
+                <h2>Explore</h2>
+                <p>Discover more opportunities in your student portal.</p>
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Resources</h3>
+                    <p>
+                        Explore learning resources and educational
+                        opportunities.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📈</div>
+                    <h3>Skill Development</h3>
+                    <p>
+                        Focus on continuous improvement and personal growth.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌟</div>
+                    <h3>Achievements</h3>
+                    <p>
+                        Celebrate your progress and keep moving forward.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        © 2026 Student Portal. Designed for learning and growth.
+    </footer>
+
+</body>
+</html>

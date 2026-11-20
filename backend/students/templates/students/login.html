@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #10172f, #172554, #312e81, #164e63);
+            background-size: 400% 400%;
+            animation: backgroundMove 14s ease infinite;
+            color: #fff;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(3px);
+            opacity: .4;
+            pointer-events: none;
+            animation: float 9s ease-in-out infinite alternate;
+        }
+
+        .orb.one {
+            width: 300px;
+            height: 300px;
+            background: #6366f1;
+            top: -100px;
+            left: -80px;
+        }
+
+        .orb.two {
+            width: 250px;
+            height: 250px;
+            background: #06b6d4;
+            bottom: -80px;
+            right: -60px;
+            animation-delay: 2s;
+        }
+
+        .orb.three {
+            width: 130px;
+            height: 130px;
+            background: #a78bfa;
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            from { transform: translate(0, 0); }
+            to { transform: translate(35px, -45px); }
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            position: relative;
+            z-index: 2;
+            padding: 42px 38px;
+            background: rgba(255, 255, 255, .09);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, .3);
+            animation: appear .9s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 25px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 29px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #06b6d4);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, .4);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .heading h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+
+        .error {
+            background: rgba(248, 113, 113, .15);
+            color: #fecaca;
+            border: 1px solid rgba(248, 113, 113, .4);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 1px solid rgba(255, 255, 255, .17);
+            border-radius: 11px;
+            outline: none;
+            background: rgba(255, 255, 255, .07);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #818cf8;
+            background: rgba(255, 255, 255, .12);
+            box-shadow: 0 0 0 4px rgba(129, 140, 248, .15);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #cbd5e1;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            color: white;
+            background: linear-gradient(100deg, #6366f1, #06b6d4);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, .25);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, .4);
+        }
+
+        .login-btn:active {
+            transform: scale(.98);
+        }
+
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 28px;
+        }
+
+        @media(max-width: 480px) {
+            .login-container {
+                padding: 32px 23px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+    <main class="login-container">
+
+        <div class="logo">S</div>
+
+        <div class="heading">
+            <h1>Welcome Back</h1>
+            <p>Sign in to your Student Portal and continue your learning journey.</p>
+        </div>
+
+        {% if error %}
+            <p class="error" role="alert">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" id="loginForm">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username">Username</label>
+
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                        autofocus
+                        autocomplete="username"
+                    >
+                    <span class="input-icon">✉</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                        aria-label="Show password"
+                    >Show</button>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginButton">
+                Sign In →
+            </button>
+
+        </form>
+
+        <div class="footer">
+            © 2026 Student Portal. All rights reserved.
+        </div>
+
+    </main>
+
+    <script>
+        const password = document.getElementById("password");
+        const toggle = document.getElementById("togglePassword");
+
+        toggle.addEventListener("click", function () {
+            const isHidden = password.type === "password";
+
+            password.type = isHidden ? "text" : "password";
+            toggle.textContent = isHidden ? "Hide" : "Show";
+            toggle.setAttribute(
+                "aria-label",
+                isHidden ? "Hide password" : "Show password"
+            );
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", function () {
+            const button = document.getElementById("loginButton");
+            button.textContent = "Signing in...";
+            button.style.opacity = ".8";
+            button.disabled = true;
+        });
+    </script>
+
+</body>
+</html>
